@@ -4,4 +4,7 @@
     <string name="error_message">Something went wrong with your connection.</string>
     <string name="error_button_ok_text">OK</string>
     <string name="error_dialog_tag">error_dialog</string>
+    <string name="network_unavailable_msg">Sorry, there\'s been an error processing that</string>
+    <string name="no_network_msg">No network available - flight mode?</string>
+    <string name="success_message">Response successful</string>
 </resources>

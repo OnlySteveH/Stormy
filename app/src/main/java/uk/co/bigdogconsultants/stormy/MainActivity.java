@@ -1,9 +1,13 @@
 package uk.co.bigdogconsultants.stormy;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +15,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -29,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         double longitude = -122.4233;
         String forecastUrl = "https://api.darksky.net/forecast/"
                 + apiKey + "/" + latitude +"," + longitude;
+
+        if(isNetworkAvailable()){
+
+        }
 
         OkHttpClient client = new OkHttpClient();
 
@@ -48,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.d(TAG, response.body().string());
                     if(response.isSuccessful()){
-                        Log.d(TAG, "Response successful");
+                        Log.d(TAG, getString(R.string.success_message));
                     } else {
-                        alertUserAboutError();
+                        alertUserAboutError(R.string.error_dialog_tag);
                     }
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -60,10 +67,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void alertUserAboutError() {
-        Log.d(TAG, "Error!");
+    private boolean isNetworkAvailable() {
+        boolean isAvailable = false;
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        if(networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        } else {
+            Toast.makeText(this,
+                            R.string.network_unavailable_msg,
+                            Toast.LENGTH_LONG).show();
+            alertUserAboutError(R.string.no_network_msg);
+        }
+        return isAvailable;
+    }
+
+    private void alertUserAboutError(int no_network_msg) {
         AlertDialogFragment dialog = new AlertDialogFragment();
-        dialog.show(getSupportFragmentManager(), getString(R.string.error_dialog_tag));
+        dialog.show(getSupportFragmentManager(), getString(no_network_msg));
     }
 
 }
