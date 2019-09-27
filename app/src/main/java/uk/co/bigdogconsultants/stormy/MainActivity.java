@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     if(response.isSuccessful()){
                         Log.d(TAG, getString(R.string.success_message));
                     } else {
-                        alertUserAboutError(R.string.error_dialog_tag);
+                        alertUserAboutError();
                     }
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -74,17 +74,14 @@ public class MainActivity extends AppCompatActivity {
         if(networkInfo != null && networkInfo.isConnected()) {
             isAvailable = true;
         } else {
-            Toast.makeText(this,
-                            R.string.network_unavailable_msg,
-                            Toast.LENGTH_LONG).show();
-            alertUserAboutError(R.string.no_network_msg);
+            alertUserAboutError();
         }
         return isAvailable;
     }
 
-    private void alertUserAboutError(int no_network_msg) {
+    private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
-        dialog.show(getSupportFragmentManager(), getString(no_network_msg));
+        dialog.show(getSupportFragmentManager(), "error_tag");
     }
 
 }
