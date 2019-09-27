@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void alertUserAboutError() {
         Log.d(TAG, "Error!");
+        AlertDialogFragment dialog = new AlertDialogFragment();
+        dialog.show(getSupportFragmentManager(), getString(R.string.error_dialog_tag));
     }
 
 }
