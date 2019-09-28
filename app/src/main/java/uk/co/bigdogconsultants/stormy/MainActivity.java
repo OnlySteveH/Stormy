@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -22,6 +24,8 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+
+    private CurrentWeather currentWeather = new CurrentWeather();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -53,18 +57,40 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
                 try {
-                    Log.d(TAG, response.body().string());
+                    String jsonData = response.body().string();
+                    Log.d(TAG, jsonData);
                     if(response.isSuccessful()){
                         Log.d(TAG, getString(R.string.success_message));
+                        currentWeather = getCurrentDetails(jsonData);
                     } else {
                         alertUserAboutError();
                     }
-                } catch (IOException e) {
-                    Log.e(TAG, e.getMessage());
+                } catch (IOException | JSONException e) {
+                    if(e.getMessage() != null) {
+                        Log.e(TAG, e.getMessage());
+                    }
                 }
             }
         });
 
+    }
+
+    private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
+        JSONObject forecast = new JSONObject(jsonData);
+        String timezone = forecast.getString("timezone");
+        Log.d(TAG, timezone);
+        JSONObject currently = forecast.getJSONObject("currently");
+        CurrentWeather currentWeather = new CurrentWeather();
+        currentWeather.setHumidity(currently.getDouble("humidity"));
+        currentWeather.setTime(currently.getLong("time"));
+        currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
+        currentWeather.setIcon(currently.getString("icon"));
+        currentWeather.setLocationLabel("Hard-coded");
+        currentWeather.setSummary(currently.getString("summary"));
+        currentWeather.setTemperature(currently.getDouble("temperature"));
+        currentWeather.setTimeZone(timezone);
+        Log.d(TAG, currentWeather.getFormattedTime(currentWeather.getTime()));
+        return currentWeather;
     }
 
     private boolean isNetworkAvailable() {
