@@ -7,4 +7,14 @@
     <string name="network_unavailable_msg">Sorry, there\'s been an error processing that</string>
     <string name="no_network_msg">No network available - flight mode?</string>
     <string name="success_message">Response successful</string>
+    <string name="degree_symbol">degree symbol</string>
+    <string name="location_name">Alcatraz Island, California</string>
+    <string name="icon_depicting_weather">icon depicting weather</string>
+    <string name="label_for_the_humidity_level">Label for the humidity level</string>
+    <string name="humidity_value">Humidity</string>
+    <string name="value_of_humidity_from_web">value of humidity from web</string>
+    <string name="label_for_the_chance_of_precip">Label for precip</string>
+    <string name="precipitation">RAIN/SNOW %</string>
+    <string name="dark_sky_message"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></string>
+    <string name="weather_summary">weather summary</string>
 </resources>
