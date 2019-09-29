@@ -3,11 +3,15 @@ package uk.co.bigdogconsultants.stormy;
   Steve Hunter - Big Dog Consultants Ltd
 */
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+
 public class CurrentWeather {
+    public static final String TAG = CurrentWeather.class.getSimpleName();
     private String locationLabel;
     private String icon;
     private long time;
@@ -17,7 +21,14 @@ public class CurrentWeather {
     private String summary;
     private String timeZone;
 
+    public String getFormattedTime() {
+        return formattedTime;
+    }
+
+    private String formattedTime;
+
     public CurrentWeather() {
+        Log.d(TAG, "Non-parametered CurrentWeather constructor used");
     }
 
     public CurrentWeather(String locationLabel, String icon,
@@ -32,6 +43,7 @@ public class CurrentWeather {
         this.precipChance = precipChance;
         this.summary = summary;
         this.timeZone = timeZone;
+        this.formattedTime = getFormattedTime(time);
     }
 
     public String getLocationLabel() {
