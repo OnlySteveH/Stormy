@@ -14,7 +14,7 @@
     <string name="humidity_value">Humidity</string>
     <string name="value_of_humidity_from_web">value of humidity from web</string>
     <string name="label_for_the_chance_of_precip">Label for precip</string>
-    <string name="precipitation">RAIN/SNOW %</string>
+    <string name="precipitation">RAIN/SNOW</string>
     <string name="dark_sky_message"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></string>
     <string name="weather_summary">weather summary</string>
 </resources>
